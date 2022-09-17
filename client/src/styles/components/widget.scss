@@ -1,0 +1,42 @@
+//widget header
+
+.widget {
+    background:rgb(16, 16, 16);
+    margin-bottom: $l-size;
+
+}
+
+
+
+.widget-header {
+background: rgb(0, 0, 0);
+color: $off-white;
+display: flex;
+justify-content: space-between;
+padding: $m-size;
+// position: fixed;
+}
+
+.widget-scroll{
+    height: 500px;
+    overflow: scroll;
+}
+
+.widget-title {
+    margin: 0;
+}
+
+.widget-message {
+    color: $off-white;
+    margin: 0;
+    padding: $l-size;
+    text-align: center;
+    border-bottom: 1px solid white;
+
+}
+
+@media(min-width:45rem) {
+    .widget-scroll{
+        height: 380px;
+    }
+}

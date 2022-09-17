@@ -1,0 +1,59 @@
+.error {
+color: $off-white;
+font-style: italic;
+padding: 0 $m-size;
+margin: $m-size 0 0 0;
+}
+
+.input-form {
+    display: flex;
+    padding: $m-size;
+    border-radius: 2px;
+    flex-direction: column;
+    border: none;
+}
+
+.input {
+    flex-grow: 1;
+    border: none;
+    border-bottom: 0.3rem solid black;
+    // margin-right: $m-size;
+    margin: 0 0 $s-size 0;
+    padding: $m-size;
+    border-radius: 3px;
+    //border line animation
+    // border-image: linear-gradient(var(--angle), #12c2e9, #c471ed, #f64f59) 1;
+    border-image: linear-gradient(var(--angle),red, yellow, lime, aqua, blue, magenta, red) 1;
+    animation: 5s rotate linear infinite;
+    height: 10px;
+    
+}
+
+.input placeholder{
+
+}
+
+/////// border line animation
+@keyframes rotate {
+    to {
+      --angle: 360deg;
+    }
+  }
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+/////// border line animation end
+
+@media (min-width: 45rem) {
+    .input-form {
+        flex-direction: row;
+    }
+
+    .input {
+        margin: 0 $s-size 0 0;
+    }
+
+}

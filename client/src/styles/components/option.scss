@@ -1,0 +1,21 @@
+.option {
+    color: $off-white;
+    display: flex;
+    justify-content: space-between;
+    padding: $l-size $m-size;
+    border-bottom: 1px solid black;
+
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+// .option__text {
+//     color: $off-white;
+//     margin:0;
+//     word-break: break-word
+
+// }
+
+.time {
+    padding-left: 2rem;
+}
