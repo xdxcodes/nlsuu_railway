@@ -1,4 +1,5 @@
-import React from 'react';
+
+import { React, useState, useEffect } from 'react';
 import Axios from 'axios';
 import AddOption from './AddOption'
 import Header from './Header'
@@ -12,60 +13,58 @@ import Disclaimer from './disclaimer'
 
 
 
-export default class ConfessionApp extends React.Component {
-state = {
-    options: [],
-    selectedOption: undefined
-}
 
-    deleteAllConfess = () => {
-    this.setState(()=> ({ options: [] }))
+export default function ConfessionApp () {
+
+const [options, setOption] = useState([]);
+const [selected, setSelected] = useState(undefined);
+const [filt, setFilter] = useState('general')
+
+
+   const deleteAllConfess = () => {
+    setOption([])
     }
 
-    refreshSelectedOption = () => {
-        this.setState(() => ({ selectedOption:undefined}))
+   const refreshSelectedOption = () => {
+        setSelected(undefined)
     }
 
-    pickOneConfess = () => {
-        this.setState(()=>{
+   const pickOneConfess = () => {
+        
             
-            const items = this.state.options.map(item => item.confess)
+            const items = options.map(item => item.confess)
             console.log(items)
             const rando = Math.floor(Math.random() * items.length)
             const now = items[rando]
-            this.setState(()=> ({
-                selectedOption: now
-            }))
-        })
+            setSelected(now)
+        
     }
 
-    addOption = (option) => {
+   const addOption = (option) => {
         if(!option) {
             return "Please add an option"
-        } else if(this.state.options.indexOf(option) > -1) {
+        } else if(options.indexOf(option) > -1) {
             return "Option already exists"
         }
-        this.setState((prevStat)=>({options: prevStat.options.concat(option)}))
+        setOption((prevStat)=>({options: prevStat.options.concat(option)}))
     }
 
-    deleteConfess = (optiontoremove) => {
-        this.setState((prevStat)=> ({
+   const deleteConfess = (optiontoremove) => {
+        setOption((prevStat)=> ({
             options: prevStat.options.filter((text) => {
                 return optiontoremove !== text
             })
         }))
     }
 
-    componentDidMount() {
+    useEffect(()=> {
 
         try {
             // const posts = localStorage.getItem('options');
             // const options = JSON.parse(json)
-            Axios.get('/main')
+            Axios.get(`${process.env.REACT_APP_URL}/group/${filt}`)
             .then(response => {
-                this.setState({
-                    options: response.data
-                })
+                setOption(response.data)
             })
             // if(options) {
             //     this.setState({
@@ -77,6 +76,21 @@ state = {
             //nothing
         }
     
+    }, [filt])
+
+    const filter = () => {
+        //this.setState(()=> ({ options: [{"_id":"62ea1e2be97f59ea9289ca45","confess":"Site under Development","createdAt":"2022-08-03T07:05:15.869Z","updatedAt":"2022-08-03T07:05:15.869Z","__v":0}] }))
+        try {
+            Axios.get(`${process.env.REACT_APP_URL}/group/general`)
+            .then(response => {
+                setOption(response.data)
+            })
+            
+        } catch (e) {
+            //nothing
+        }
+    
+    
     }
     
     // componentDidUpdate(prevProps, prevState) {
@@ -87,41 +101,60 @@ state = {
     
     // }
     
-    render () {
+  
         const header = 'NLSU TALES'
-        const subhead = 'National Law Students Union Tales'
+        const subhead = 'National Law University Tales'
         return (
             <div>
                 <Header head={header} subhead={subhead}/>
                 <div className="container">
                 <Action 
-                hasOptions={this.state.options.length > 0}
-                pickOneConfess={this.pickOneConfess}
+                hasOptions={options.length > 0}
+                pickOneConfess={pickOneConfess}
                 />
+                
+                <div className="filter"> 
+                <div>
+            <button onClick={()=> setFilter('general')} className="filter-button">General</button>
+            <button onClick={()=> setFilter('tnnlu')} className="filter-button">TNNLU</button>
+            <button onClick={()=> setFilter('nlsiu')} className="filter-button">NLSIU</button>
+            <button onClick={()=> setFilter('nalsar')} className="filter-button">NALSAR</button>
+            <button onClick={()=> setFilter('nliu')} className="filter-button">NLIU</button>
+            <button onClick={()=> setFilter('wbnujs')} className="filter-button">WBNUJS</button>
+            <button onClick={()=> setFilter('hnlu')} className="filter-button">HNLU</button>
+            
+            </div>
+                
+                </div>
                 <div className="widget">
+                
                 <div className="widget-scroll">
                 <Options 
-                allconfess={this.state.options}
-                deleteAllConfess={this.deleteAllConfess}
-                deleteConfess={this.deleteConfess}
+                allconfess={options}
+                deleteAllConfess={deleteAllConfess}
+                deleteConfess={deleteConfess}
+                head={filt}
                 />
                 </div>
                 <AddOption 
-                addOption={this.addOption}
+                addOption={addOption}
+                head={filt}
                 />
                 </div>
                 <Feedback />
                 </div>
                 <OptionModal
-                selectedOption={this.state.selectedOption}
-                refreshSelectedOption={this.refreshSelectedOption}
+                selectedOption={selected}
+                refreshSelectedOption={refreshSelectedOption}
                 />
+                
                 <Disclaimer />
+                
                 <ToastContainer toastStyle={{ backgroundColor: "#121212"}} />
             </div>
             
         )
-    }
+    
 }
 
 

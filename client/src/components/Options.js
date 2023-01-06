@@ -4,11 +4,17 @@ import Option from './Option'
 const Options = (props) => (
     <div>
         <div className="widget-header">
-            <h3 className="widget-title">SPOOKY TALES</h3>
+            <h3 className="widget-title">{props.head.toUpperCase()} TALES</h3>
             
         </div>
 
-    {props.allconfess.length === 0 && <p className="widget-message">Your confessions will appear Here! </p> }
+    {props.allconfess.length === 0 &&  
+    <div className="widget-heart">
+    <p className="widget-message">Loading... </p>
+    
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+     }
 
         {props.allconfess.map((items, index) =>{
             return (

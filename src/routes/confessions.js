@@ -5,8 +5,11 @@ const ConfessPublic = require('../models/reviewed')
 const Admin = require('../models/admin')
 const auth = require('../middleware/auth')
 
-router.get('/main', async (req, res) => {
-    const all = await ConfessPublic.find({}).sort({_id:-1})
+
+router.get('/group/:type', async (req, res) => {
+
+    const type = req.params.type
+    const all = await ConfessPublic.find({group: type}).sort({_id:-1})
     try {
     res.status(200).send(all)
     } catch (err) {
@@ -34,8 +37,10 @@ router.post('/admin-review', auth, async (req, res) => {
     }
 })
 
-router.get('/admin-home', auth, async (req, res) => {
-    const all = await Confess.find({})
+router.get('/admin-home/:type', auth, async (req, res) => {
+    
+    const type = req.params.type
+    const all = await Confess.find({group: type}).sort({_id:-1})
     try {
     res.status(200).send(all)
     } catch (err) {

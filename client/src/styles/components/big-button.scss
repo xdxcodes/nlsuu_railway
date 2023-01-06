@@ -2,7 +2,7 @@
     position: relative;
     height: 40px;
     width: 100%;
-    margin-bottom: $m-size;
+    margin-bottom: $s-size;
     border: none;
     outline: none;
     color: white;
@@ -61,12 +61,25 @@
 
   @media(min-width:45rem) {
     .big-button {
-        margin-bottom: $xl-size;
+        margin-bottom: $s-size;
     }
 }
 
 
-
+.filter-button {
+  margin-right: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  background-color: rgb(0, 0, 0);
+  color: $off-white;
+  border: none;
+  font-size: 15px;
+  border-radius: 20px;
+  padding: 7px;
+  border: 2px solid;
+  border-color: #48ff00;
+  
+}
 
 
 

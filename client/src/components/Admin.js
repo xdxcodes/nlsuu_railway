@@ -1,3 +1,6 @@
+
+
+
 import React from 'react';
 import {useState} from 'react';
 import Axios from 'axios';
@@ -9,7 +12,7 @@ export default function Admin () {
 
     const handleLogin = (e) =>{
         e.preventDefault()
-        Axios.post('/admin/login', {email, password})
+        Axios.post(`${process.env.REACT_APP_URL}/admin/login`, {email, password})
         .then(response =>  {
             if (response.status === 200) {
                 // console.log(response.data)
@@ -25,7 +28,7 @@ export default function Admin () {
       }
 
     const getAdminBoard = () => {
-        return Axios.get( '/confess', { headers: AuthHeader() });
+        return Axios.get( `${process.env.REACT_APP_URL}/confess`, { headers: AuthHeader() });
       }
 
 

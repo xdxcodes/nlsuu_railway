@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
@@ -27,7 +29,7 @@ className="modal"
   <li className="listitem">Please don't Post anysort of hateful comments🤫</li>
   <li className="listitem">Do not use Profane language and Avoid Rumors💥</li>
   <li className="listitem">Please take confessions as funny as possible❤️‍🔥</li>
-  <li className="listitem">You are entering at your own will and we aren't not responsible for Anything as this is a open platform. So kindly be responsible🤟</li>
+  <li className="listitem">You are entering at your own will and we are not responsible for Anything as this is a open platform. So kindly be responsible🤟</li>
   <li className="listitem">For post removal and suggestions, please contact strangemolecules@protonmail.com</li>
   
 </ul> 

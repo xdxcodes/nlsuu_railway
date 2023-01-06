@@ -1,21 +1,22 @@
+
 import React from 'react';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+
 import Axios from 'axios';
 import AuthHeader from './AuthHeader';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 
-export default class AdminHome extends React.Component {
-    state = {
-        options: [],
-        selectedOption: undefined
-    }
+export default function AdminHome () {
+
+    const [options, setOption] = useState([]);
+    const [filt, setFilter] = useState('general')
     
 
-    notifyMessage = () => toast.success('🦄 Successfull', {
+    const notifyMessage = () => toast.success('🦄 Successfull', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -25,72 +26,105 @@ export default class AdminHome extends React.Component {
         progress: undefined,
         });
 
-    getItems = (optiontodelete) => 
-        this.state.options.filter((item) =>{
-           return item._id !== optiontodelete
-        })
-    pushItems = (optiontoupdate) =>
-        this.state.options.filter((item) =>{
-            return item.confess !== optiontoupdate
-        })
+
+        useEffect(() => {
+            try {
+    
+                Axios.get(`${process.env.REACT_APP_URL}/admin-home/${filt}`, {
+                    headers: AuthHeader()
+                    })
+                .then(response => {
+                    setOption(response.data)
+                })  
+                console.log(options)
+            } catch (e) {
+                //nothing
+            }
+        
+        }, [filt]);
+
+
+
+    const getItems = (optiontodelete) => {
+        
+        options.filter((item) => {
+                return item._id !== optiontodelete
+            }
+        )
+        console.log(options)
+    }
+
+    const pushItems = (optiontoupdate) => {
+        console.log(optiontoupdate)
+        options.filter((item) => {
+                return optiontoupdate !== item.confess
+            })
+        
+    }
         
     
-    deleteConfess = (optiontodelete) => {
-        Axios.delete(`/confess/${optiontodelete}`, { headers: AuthHeader() })
+    const deleteConfess = (optiontodelete, type) => {
+        Axios.delete(`${process.env.REACT_APP_URL}/confess/${optiontodelete}`, { headers: AuthHeader() })
         .then(res => {if(res.status === 200) 
-            this.notifyMessage()
+            notifyMessage()
         }).then(
-            this.setState({ 
-                options: this.getItems(optiontodelete)
-            })
+            setOption(options.filter((item) => {
+                return item._id !== optiontodelete
+            }
+        ))
         ).catch(err => console.log(err.response.data))
         
         console.log(optiontodelete)
     }
 
-    updateConfess = (optiontoupdate, optiontodelete) => {
-        Axios.post('/admin-review', {confess: optiontoupdate}, { headers: AuthHeader() })
+    const updateConfess = (optiontoupdate, optiontodelete, type) => {
+        Axios.post(`${process.env.REACT_APP_URL}/admin-review`, {confess: optiontoupdate, group: type}, { headers: AuthHeader() })
         .then(res => {if(res.status === 200) 
-            this.notifyMessage()
-        }).then (Axios.delete(`/confess/${optiontodelete}`, { headers: AuthHeader() }))
+            notifyMessage()
+        }).then (Axios.delete(`${process.env.REACT_APP_URL}/confess/${optiontodelete}`, { headers: AuthHeader() }))
         
         .then(
-            this.setState({ 
-                options: this.pushItems(optiontoupdate)
-            })
+            setOption(
+                
+                options.filter((item) => {
+                        return optiontoupdate !== item.confess
+                    })
+                
+            )
         ).catch(err => console.log(err))
         
     }
 
-    componentDidMount() {
-        try {
 
-            Axios.get('/admin-home', {
-                headers: AuthHeader()
-                })
-            .then(response => {
-                this.setState({
-                    options: response.data
-                })
-            })  
-            console.log(this.state.options)
-        } catch (e) {
-            //nothing
-        }
     
-    }
     
-    render() {
         return (
             <div>
+
+            <div className="filter"> 
+                <div>
+                    <button onClick={()=> setFilter('general')} className="filter-button">General</button>
+                    <button onClick={()=> setFilter('tnnlu')} className="filter-button">TNNLU</button>
+                    <button onClick={()=> setFilter('nlsiu')} className="filter-button">NLSIU</button>
+                    <button onClick={()=> setFilter('nalsar')} className="filter-button">NALSAR</button>
+                    <button onClick={()=> setFilter('nliu')} className="filter-button">NLIU</button>
+                    <button onClick={()=> setFilter('wbnujs')} className="filter-button">WBNUJS</button>
+                    <button onClick={()=> setFilter('hnlu')} className="filter-button">HNLU</button>
+            
+                 </div>
+             </div>
+
                 <Options 
-                unpublishedconfess={this.state.options}
-                deleteConfess={this.deleteConfess}
-                updateConfess={this.updateConfess}
+                unpublishedconfess={options}
+                deleteConfess={deleteConfess}
+                updateConfess={updateConfess}
+                head={filt}
                 />
+
+
             </div>
         )
-    }
+    
    }
 
 
@@ -98,10 +132,10 @@ export default class AdminHome extends React.Component {
 const Options = (props) => (
     <div>
         <div className="widget-header">
-            <h3 className="widget-title"> Unpublished Confessions</h3>
+            <h3 className="widget-title"> {props.head.toUpperCase()} Unpublished Confessions </h3>
             {/* <button className="button button--link" onClick={props.deleteAllConfess}>Remove All</button> */}
         </div>
-
+    
     {props.unpublishedconfess.length === 0 && <p className="widget-message">Unauthorized! Please login to Authenticate </p> }
 
         {props.unpublishedconfess.map((items, index) =>{
@@ -110,6 +144,7 @@ const Options = (props) => (
                 key={items._id}
                 iden={items._id}
                 optionText={items.confess}
+                group={items.group}
                 count={index + 1}
                 deleteConfess={props.deleteConfess}
                 updateConfess={props.updateConfess}
@@ -125,12 +160,12 @@ const Option = (props) => (
         <p>{props.count}. {props.optionText} ------</p>
         
         <button className="button button--link" onClick={(e)=> {
-            props.deleteConfess(props.iden)
+            props.deleteConfess(props.iden, props.group)
         }}
         >Remove</button>
         
         <button className="button button--link" onClick={(e)=> {
-            props.updateConfess(props.optionText, props.iden)
+            props.updateConfess(props.optionText, props.iden, props.group)
         }}
         >Add</button>
         

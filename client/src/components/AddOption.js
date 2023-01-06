@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import {useState} from 'react';
 import Axios from 'axios';
@@ -13,6 +15,8 @@ export default function AddOption (props) {
     const [text, setText] = useState('')
     const [notify, setNotify] = useState('')
 
+    const group = props.head
+
     const notifyMessage = () => toast.success('🦄 Will be published shortly', {
         position: "top-center",
         autoClose: 5000,
@@ -26,8 +30,9 @@ export default function AddOption (props) {
     const addOption = (e) =>{
         e.preventDefault()
         // const inp = e.target.elements.option.value.trim()
-        // setText({text: inp})
-        Axios.post('/confess', {confess: text})
+        // setText({text: inp}) 
+        
+        Axios.post(`${process.env.REACT_APP_URL}/confess`, {confess: text, group: props.head })
         .then(res => {if(res.status === 200) 
             notifyMessage()
             e.target.elements.option.value = ''

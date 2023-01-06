@@ -5,8 +5,11 @@ const confessPublicSchema = new mongoose.Schema({
         required: true,
         type: 'string',
         trim: true
+    }, 
+    group:{
+        required: true,
+        type: 'string'
     }
-
 },
 {
     timestamps: true
