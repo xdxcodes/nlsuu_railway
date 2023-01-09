@@ -32,7 +32,7 @@ export default function AddOption (props) {
         // const inp = e.target.elements.option.value.trim()
         // setText({text: inp}) 
         
-        Axios.post(`/confess`, {confess: text, group: props.head })
+        Axios.post(`https://nlsurender.onrender.com/confess`, {confess: text, group: props.head })
         .then(res => {if(res.status === 200) 
             notifyMessage()
             e.target.elements.option.value = ''
