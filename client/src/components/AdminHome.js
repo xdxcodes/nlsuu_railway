@@ -30,7 +30,7 @@ export default function AdminHome () {
         useEffect(() => {
             try {
     
-                Axios.get(`${process.env.REACT_APP_URL}/admin-home/${filt}`, {
+                Axios.get(`/admin-home/${filt}`, {
                     headers: AuthHeader()
                     })
                 .then(response => {
@@ -64,7 +64,7 @@ export default function AdminHome () {
         
     
     const deleteConfess = (optiontodelete, type) => {
-        Axios.delete(`${process.env.REACT_APP_URL}/confess/${optiontodelete}`, { headers: AuthHeader() })
+        Axios.delete(`/confess/${optiontodelete}`, { headers: AuthHeader() })
         .then(res => {if(res.status === 200) 
             notifyMessage()
         }).then(
@@ -78,10 +78,10 @@ export default function AdminHome () {
     }
 
     const updateConfess = (optiontoupdate, optiontodelete, type) => {
-        Axios.post(`${process.env.REACT_APP_URL}/admin-review`, {confess: optiontoupdate, group: type}, { headers: AuthHeader() })
+        Axios.post(`/admin-review`, {confess: optiontoupdate, group: type}, { headers: AuthHeader() })
         .then(res => {if(res.status === 200) 
             notifyMessage()
-        }).then (Axios.delete(`${process.env.REACT_APP_URL}/confess/${optiontodelete}`, { headers: AuthHeader() }))
+        }).then (Axios.delete(`/confess/${optiontodelete}`, { headers: AuthHeader() }))
         
         .then(
             setOption(
