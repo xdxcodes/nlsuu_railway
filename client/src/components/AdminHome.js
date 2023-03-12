@@ -30,7 +30,7 @@ export default function AdminHome () {
         useEffect(() => {
             try {
     
-                Axios.get(`https://nlsurender.onrender.com/admin-home/${filt}`, {
+                Axios.get(`https://nlsu.cyclic.app/admin-home/${filt}`, {
                     headers: AuthHeader()
                     })
                 .then(response => {
@@ -64,7 +64,7 @@ export default function AdminHome () {
         
     
     const deleteConfess = (optiontodelete, type) => {
-        Axios.delete(`https://nlsurender.onrender.com/confess/${optiontodelete}`, { headers: AuthHeader() })
+        Axios.delete(`https://nlsu.cyclic.app/confess/${optiontodelete}`, { headers: AuthHeader() })
         .then(res => {if(res.status === 200) 
             notifyMessage()
         }).then(
@@ -78,10 +78,10 @@ export default function AdminHome () {
     }
 
     const updateConfess = (optiontoupdate, optiontodelete, type) => {
-        Axios.post(`https://nlsurender.onrender.com/admin-review`, {confess: optiontoupdate, group: type}, { headers: AuthHeader() })
+        Axios.post(`https://nlsu.cyclic.app/admin-review`, {confess: optiontoupdate, group: type}, { headers: AuthHeader() })
         .then(res => {if(res.status === 200) 
             notifyMessage()
-        }).then (Axios.delete(`https://nlsurender.onrender.com/confess/${optiontodelete}`, { headers: AuthHeader() }))
+        }).then (Axios.delete(`https://nlsu.cyclic.app/confess/${optiontodelete}`, { headers: AuthHeader() }))
         
         .then(
             setOption(
