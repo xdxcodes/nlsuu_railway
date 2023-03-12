@@ -110,6 +110,7 @@ export default function AdminHome () {
                     <button onClick={()=> setFilter('nliu')} className="filter-button">NLIU</button>
                     <button onClick={()=> setFilter('wbnujs')} className="filter-button">WBNUJS</button>
                     <button onClick={()=> setFilter('hnlu')} className="filter-button">HNLU</button>
+                    <button onClick={()=> setFilter('nuals')} className="filter-button">NUALS</button>
             
                  </div>
              </div>
