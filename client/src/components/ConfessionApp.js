@@ -116,12 +116,13 @@ const [filt, setFilter] = useState('general')
                 <div className="filter"> 
                 <div>
             <button onClick={()=> setFilter('general')} className="filter-button">General</button>
-            <button onClick={()=> setFilter('tnnlu')} className="filter-button">TNNLU</button>
             <button onClick={()=> setFilter('nlsiu')} className="filter-button">NLSIU</button>
+            <button onClick={()=> setFilter('tnnlu')} className="filter-button">TNNLU</button>
             <button onClick={()=> setFilter('nalsar')} className="filter-button">NALSAR</button>
             <button onClick={()=> setFilter('nliu')} className="filter-button">NLIU</button>
             <button onClick={()=> setFilter('wbnujs')} className="filter-button">WBNUJS</button>
             <button onClick={()=> setFilter('hnlu')} className="filter-button">HNLU</button>
+            <button onClick={()=> setFilter('nuals')} className="filter-button">NUALS</button>
             
             </div>
                 
