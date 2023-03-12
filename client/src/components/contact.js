@@ -2,8 +2,8 @@ import React from "react"
 
 const Feedback = () => (
     <div>
-        <p className="feedback">Feedback 💌 strangemolecules@protonmail.com</p>
-        <p className="feedback">Copyright	&#169; 2022 NLSU. All rights reserved</p>
+        <p className="feedback">Feedback 💌 nlsu.fun@protonmail.com</p>
+        <p className="feedback">Copyright	&#169; 2023 NLSU. All rights reserved</p>
     </div>
 
 )
