@@ -62,7 +62,7 @@ const [filt, setFilter] = useState('general')
         try {
             // const posts = localStorage.getItem('options');
             // const options = JSON.parse(json)
-            Axios.get(`https://nlsu.cyclic.app/group/${filt}`)
+            Axios.get(`https://nlsuu-production.up.railway.app/group/${filt}`)
             .then(response => {
                 setOption(response.data)
             })
@@ -81,7 +81,7 @@ const [filt, setFilter] = useState('general')
     const filter = () => {
         //this.setState(()=> ({ options: [{"_id":"62ea1e2be97f59ea9289ca45","confess":"Site under Development","createdAt":"2022-08-03T07:05:15.869Z","updatedAt":"2022-08-03T07:05:15.869Z","__v":0}] }))
         try {
-            Axios.get(`https://nlsu.cyclic.app/group/general`)
+            Axios.get(`https://nlsuu-production.up.railway.app/group/general`)
             .then(response => {
                 setOption(response.data)
             })
