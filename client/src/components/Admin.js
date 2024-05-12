@@ -12,7 +12,7 @@ export default function Admin () {
 
     const handleLogin = (e) =>{
         e.preventDefault()
-        Axios.post(`https://nlsu.cyclic.app/admin/login`, {email, password})
+        Axios.post(`https://nlsuu-production.up.railway.app/admin/login`, {email, password})
         .then(response =>  {
             if (response.status === 200) {
                 // console.log(response.data)
@@ -28,7 +28,7 @@ export default function Admin () {
       }
 
     const getAdminBoard = () => {
-        return Axios.get( `https://nlsu.cyclic.app/confess`, { headers: AuthHeader() });
+        return Axios.get( `https://nlsuu-production.up.railway.app/confess`, { headers: AuthHeader() });
       }
 
 
