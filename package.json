@@ -20,4 +20,8 @@
     "mongoose": "^6.4.4",
     "validator": "^13.7.0"
   }
+},
+  "engines": {
+    "node": "18.1"
+  }
 }
